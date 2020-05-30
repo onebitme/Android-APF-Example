@@ -66,14 +66,13 @@ public class PotentialField {
 
     //Where everything is calculated
     public double calculateRepulsive(){
-        double dq = Math.sqrt((robot.x - obs.x)*(robot.x - obs.x) + (robot.y - obs.y)*(robot.y - obs.y)) ;
-        double repulsive = KR * (1/dq - 1/robot.diameter);
-        repulsive = repulsive*repulsive;
+        double dq = ((robot.x - obs.x)*(robot.x - obs.x) + (robot.y - obs.y)*(robot.y - obs.y)) ;
+        double repulsive = KR * (1/dq);
         return repulsive;
     }
     public double calculateAttractive(){
-        double toGoal = Math.sqrt((robot.x - robot.goalX)*(robot.x - robot.goalX) + (robot.y - robot.goalY)*(robot.y - robot.goalY));
-        double attactive = KA * toGoal;
+        double toGoal = (robot.x - robot.goalX)*(robot.x - robot.goalX) + (robot.y - robot.goalY)*(robot.y - robot.goalY);
+        double attactive = 0.5*KA * toGoal;
         return attactive;
 
     }
@@ -88,11 +87,11 @@ public class PotentialField {
         double forceActing = 0;
         double acceleration = 0;
         double displacement = 0;
-        while (timeStep <= 1.2){
+        while (timeStep <= 2){
             forceActing = calculateAttractive() - calculateRepulsive();
             acceleration = forceActing/robot.mass;
             setRobotVelocity(acceleration*timeStep);
-            displacement = robot.velocity*timeStep + 0.5*acceleration*timeStep*timeStep;
+            displacement = robot.velocity*timeStep; //+ 0.5*acceleration*timeStep*timeStep;
             timeStep = timeStep+ 0.1;
             setRobotCoordinates(robot.x-displacement, robot.y-displacement);
             System.out.println("Robot X : " + robot.x);
