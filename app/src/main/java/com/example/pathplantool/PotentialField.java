@@ -70,7 +70,6 @@ public class PotentialField {
         double repulsive = KR * (1/dq - 1/robot.diameter);
         repulsive = repulsive*repulsive;
         return repulsive;
-        //deneme
     }
     public double calculateAttractive(){
         double toGoal = Math.sqrt((robot.x - robot.goalX)*(robot.x - robot.goalX) + (robot.y - robot.goalY)*(robot.y - robot.goalY));
