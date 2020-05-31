@@ -1,5 +1,7 @@
 package com.example.pathplantool;
 
+import android.util.Pair;
+
 import java.util.ArrayList;
 
 public class PotentialField {
@@ -41,63 +43,80 @@ public class PotentialField {
     public void setRobotMass(double mass){
         robot.mass = mass;
     }
-    public void setRobotVelocity(double velocity){
-        robot.velocity = velocity;
+    public void setRobotVelocity(double velocityX, double velocityY){
+        robot.velocityX = velocityX;
+        robot.velocityY = velocityY;
     }
     public void setRobotHeading(double heading){
         robot.heading = heading;
     }
 
     //Repulsive Cost
-    double KR = 100;
+    double KR = 1;
     //Attractive Cost
-    double KA = 5;
+    double KA = 1;
 
     public void initALL(){
-        setObstacleCoordinate(100,100);
+        setObstacleCoordinate(95,94);
         setRobotCoordinates(101,101);
         setRobotDiameter(10);
-        setRobotGoal(20,20);
-        setRobotMass(10);
-        setRobotVelocity(0);
+        setRobotGoal(88,85);
+        setRobotMass(1000);
+        setRobotVelocity(0,0);
         setObstacleHeading(0);
         setRobotHeading(0);
     }
 
     //Where everything is calculated
-    public double calculateRepulsive(){
+    public double[] calculateRepulsive(){
+        double[] repulsive = new double[2];
         double dq = ((robot.x - obs.x)*(robot.x - obs.x) + (robot.y - obs.y)*(robot.y - obs.y)) ;
-        double repulsive = KR * (1/dq);
+        double repulsiveForce = KR * (1/dq);
+        double repulsiveAngle = Math.atan((robot.y-obs.x)/(robot.x-obs.x));
+        repulsive[0] = repulsiveForce;
+        repulsive[1] = repulsiveAngle;
         return repulsive;
     }
-    public double calculateAttractive(){
-        double toGoal = (robot.x - robot.goalX)*(robot.x - robot.goalX) + (robot.y - robot.goalY)*(robot.y - robot.goalY);
-        double attactive = 0.5*KA * toGoal;
-        return attactive;
+    public double[] calculateAttractive(){
+        double[] attractive = new double [2];
+        double toGoalDist = (robot.x - robot.goalX)*(robot.x - robot.goalX) + (robot.y - robot.goalY)*(robot.y - robot.goalY);
+        double attractiveForce = 0.5*KA * toGoalDist;
+        double attractiveAngle = Math.atan((robot.y-robot.goalY)/(robot.x-robot.goalX));
+        attractive[0] = attractiveForce;
+        attractive[1] = attractiveAngle;
+        return attractive;
 
     }
+    //TODO: BORDER YOK
+    //TODO: Uçuyor gidiyor
+
     public double calculatePotentials(){
-        //t=0
-        //While Xinit & Yinit  == GoalXY
-        //Attractive - Repulsive  = F
-        // F/m = a
-        //Displacement = V0*t + 0.5*a*t^2
-        //set Robot X - Y from displacement
+        //InMethod Variables
         double timeStep = 0;
-        double forceActing = 0;
-        double acceleration = 0;
-        double displacement = 0;
-        while (timeStep <= 2){
-            forceActing = calculateAttractive() - calculateRepulsive();
-            acceleration = forceActing/robot.mass;
-            setRobotVelocity(acceleration*timeStep);
-            displacement = robot.velocity*timeStep; //+ 0.5*acceleration*timeStep*timeStep;
-            timeStep = timeStep+ 0.1;
-            setRobotCoordinates(robot.x-displacement, robot.y-displacement);
+        double forceActingX;
+        double forceActingY;
+        double accelerationX;
+        double accelerationY;
+        double displacementX = 0;
+        double displacementY = 0;
+        while (Math.abs(robot.x - robot.goalX) > 1 && Math.abs(robot.y - robot.goalY)>1){
+            forceActingX = (calculateAttractive()[0]*Math.cos(calculateAttractive()[1]))
+                    -(calculateRepulsive()[0]*Math.cos(calculateRepulsive()[1]));
+            forceActingY = (calculateAttractive()[0]*Math.sin(calculateAttractive()[1]))
+                    -(calculateRepulsive()[0]*Math.sin(calculateRepulsive()[1]));
+
+            accelerationX = forceActingX/robot.mass;
+            accelerationY = forceActingY/robot.mass;
+            setRobotVelocity(robot.velocityX+accelerationX*timeStep,
+                    robot.velocityY+accelerationY*timeStep);
+            displacementX = robot.velocityX*timeStep;
+            displacementY = robot.velocityY*timeStep;
+            timeStep = timeStep + 0.1;
+            setRobotCoordinates(robot.x-displacementX, robot.y-displacementY);
             System.out.println("Robot X : " + robot.x);
-            System.out.println("Robot Acc : " + acceleration);
+            System.out.println("Robot Y : " + robot.y);
         }
-        return displacement;
+        return displacementX;
     }
 
 }

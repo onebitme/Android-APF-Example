@@ -6,7 +6,8 @@ public class DummyRobot {
     double mass;
     double x;
     double y;
-    double velocity;
+    double velocityX;
+    double velocityY;
     double heading;
 
     double goalX;
