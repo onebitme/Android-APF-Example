@@ -7,6 +7,74 @@
     android:background="#4A5ABB"
     tools:context=".MainActivity">
 
+    <EditText
+        android:id="@+id/objY2"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Robot Y"
+        android:inputType="number"
+        android:textColor="#00ACC1"
+        android:textColorHint="#00ACC1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/objX"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/objX"
+        app:layout_constraintTop_toBottomOf="@+id/objX"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/objX2"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Goal X"
+        android:inputType="number"
+        android:textColor="#00ACC1"
+        android:textColorHint="#00ACC1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/objX"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/objY"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Goal Y"
+        android:inputType="number"
+        android:textColor="#00ACC1"
+        android:textColorHint="#00ACC1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/objX2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/objX2"
+        app:layout_constraintTop_toBottomOf="@+id/objX2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/objX"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Robot X"
+        android:inputType="number"
+        android:textColor="#00ACC1"
+        android:textColorHint="#00ACC1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.07" />
+
     <Button
         android:id="@+id/buttonTest"
         android:layout_width="116dp"
@@ -15,10 +83,10 @@
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498" />
+        app:layout_constraintVertical_bias="0.797" />
 
     <Button
         android:id="@+id/buttonTest2"
@@ -28,10 +96,23 @@
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.637" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonTest"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/buttonTest4"
+        android:layout_width="116dp"
+        android:layout_height="50dp"
+        android:text="Set Robot& Goal"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/objY"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/objY2"
+        app:layout_constraintTop_toBottomOf="@+id/objY2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.example.pathplantool.Helpers.PathView
         android:id="@+id/pathViewPath"
@@ -45,5 +126,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.494" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
