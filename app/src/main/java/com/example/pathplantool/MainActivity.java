@@ -1,6 +1,7 @@
 package com.example.pathplantool;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.pathplantool.Helpers.PathView;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     Button startButton;
+    PathView pathViewPath;
 
     PotentialField potentialCalculator = new PotentialField();
     double[] toDraw = new double[7];
@@ -22,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setOnClickListeners();
+
+        pathViewPath = findViewById(R.id.pathViewPath);
+
+        pathViewPath.updatePath();
 
         potentialCalculator.initALL();
 

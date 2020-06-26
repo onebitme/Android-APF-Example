@@ -8,12 +8,16 @@ import android.util.AttributeSet;
 import android.view.View;
 import androidx.annotation.Nullable;
 
+import com.example.trustvehicle.Helpers.PathCSVKt;
+
 
 public class PathView extends View {
     private Paint paint;
     //private Repository repository = Repository.getInstance();
     private float[] arrayToDraw;
     private float radius=100;
+
+    private PathCSVKt csvKt;
 
 
     public PathView(Context context) {
@@ -50,10 +54,6 @@ public class PathView extends View {
         super.onDraw(canvas);
 
         System.out.println("ocul - ondraw yapıldı");
-        //drawPath(canvas, repository.getPathArray());
-        //canvas.drawCircle(100,100,radius,paint);
-        //canvas.drawLine(200.0f,200.0f,radius*10.0f,radius*12.0f,paint);
-        //canvas.save();
         //canvas.rotate(0);
         //canvas.drawLines(PathCSVKt.makeFloatArray(),paint);
         //arrayToDraw = repository.getPathArray();
@@ -70,8 +70,9 @@ public class PathView extends View {
     }
     public void updatePath() {
         //arrayToDraw = repository.getPathArray();
+        arrayToDraw = csvKt.makeFloatArray();
         //radius=repository.getIncomingLongMessage()[8];
-        //System.out.println("ocul- path update yapıldı radius:  "+repository.getIncomingLongMessage()[8]);
+        System.out.println("ocul- path update yapıldı radius:  ");
         postInvalidate();
     }
 }
