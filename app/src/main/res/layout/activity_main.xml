@@ -112,7 +112,7 @@
         app:layout_constraintVertical_bias="0.07" />
 
     <Button
-        android:id="@+id/buttonTest"
+        android:id="@+id/StartAnimation"
         android:layout_width="116dp"
         android:layout_height="50dp"
         android:text="Start Animation"
@@ -134,7 +134,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTest"
+        app:layout_constraintTop_toBottomOf="@+id/StartAnimation"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button

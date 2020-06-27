@@ -53,11 +53,6 @@ public class PathView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        System.out.println("ocul - ondraw yapıldı");
-        //canvas.rotate(0);
-        //canvas.drawLines(PathCSVKt.makeFloatArray(),paint);
-        //arrayToDraw = repository.getPathArray();
-        System.out.println("esoze - repodan array aldı");
         if (arrayToDraw != null) {
             System.out.println("esozen: path ilk elemanı" +"X: " + arrayToDraw[0] + " Y: "+arrayToDraw[1]);
             canvas.drawLines(arrayToDraw, paint);
@@ -69,10 +64,8 @@ public class PathView extends View {
 
     }
     public void updatePath() {
-        //arrayToDraw = repository.getPathArray();
+
         arrayToDraw = csvKt.makeFloatArray();
-        //radius=repository.getIncomingLongMessage()[8];
-        System.out.println("ocul- path update yapıldı radius:  ");
         postInvalidate();
     }
 }
