@@ -97,7 +97,7 @@ public class PotentialField {
     //TODO: BORDER YOK
     //TODO: Uçuyor gidiyor
 
-    public double[] calculatePotentials(){
+    public void calculatePotentials(){
         //InMethod Variables
         double timeStep = 0;
         double forceActingX;
@@ -106,7 +106,7 @@ public class PotentialField {
         double accelerationY;
         double displacementX = 0;
         double displacementY = 0;
-        double[] required = new double[4];
+
         while (Math.abs(robot.x - robot.goalX) > 1 && Math.abs(robot.y - robot.goalY)>1){
             forceActingX = (calculateAttractive()[0]*Math.cos(calculateAttractive()[1]))
                     -(calculateRepulsive()[0]*Math.cos(calculateRepulsive()[1]));
@@ -121,11 +121,7 @@ public class PotentialField {
             displacementY = robot.velocityY*timeStep;
             timeStep += 0.1;
             setRobotCoordinates(robot.x-displacementX, robot.y-displacementY);
-            System.out.println("Robot X : " + robot.x);
-            System.out.println("Robot Y : " + robot.y);
-
         }
-        return required;
     }
 
 }

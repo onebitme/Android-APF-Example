@@ -63,6 +63,9 @@ public class PathView extends View {
         }
 
     }
+
+
+
     public void updatePath() {
 
         arrayToDraw = csvKt.makeFloatArray();

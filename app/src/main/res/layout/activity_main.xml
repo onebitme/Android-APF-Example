@@ -44,7 +44,7 @@
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/objY2"
+        android:id="@+id/objY"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:ems="10"
@@ -78,7 +78,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/objY"
+        android:id="@+id/objY2"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:ems="10"
@@ -138,7 +138,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/buttonTest4"
+        android:id="@+id/buttonSetCoordinates"
         android:layout_width="116dp"
         android:layout_height="50dp"
         android:text="Set Robot Goal"
