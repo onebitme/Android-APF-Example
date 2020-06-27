@@ -13,4 +13,6 @@ public class DummyRobot {
     double goalX;
     double goalY;
 
+    double timeStep;
+
 }

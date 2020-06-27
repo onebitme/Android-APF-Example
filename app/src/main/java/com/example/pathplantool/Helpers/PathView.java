@@ -19,7 +19,6 @@ public class PathView extends View {
 
     private PathCSVKt csvKt;
 
-
     public PathView(Context context) {
         super(context);
         paint = new Paint();
@@ -41,22 +40,14 @@ public class PathView extends View {
         }
     }
 
-    public float[] convertLongArrayToFloatArray(long[] longArray) {
-        float[] floatArray = new float[longArray.length];
-        for (int i = 0; i < longArray.length; i++) {
-            floatArray[i] = longArray[i];
-        }
-        return floatArray;
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         if (arrayToDraw != null) {
-            System.out.println("esozen: path ilk elemanı" +"X: " + arrayToDraw[0] + " Y: "+arrayToDraw[1]);
+            //System.out.println("esozen: path ilk elemanı" +"X: " + arrayToDraw[0] + " Y: "+arrayToDraw[1]);
             canvas.drawLines(arrayToDraw, paint);
-            System.out.println("bir path çizildi");
+            //System.out.println("bir path çizildi");
         }
         else{
             System.out.println("arrayToDraw = Null");
@@ -64,10 +55,7 @@ public class PathView extends View {
 
     }
 
-
-
     public void updatePath() {
-
         arrayToDraw = csvKt.makeFloatArray();
         postInvalidate();
     }

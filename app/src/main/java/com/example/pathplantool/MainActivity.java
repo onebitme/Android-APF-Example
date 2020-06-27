@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import static com.example.pathplantool.PotentialField.robot;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button startButton, stopButton, setRobotPos;
@@ -19,8 +17,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     PotentialField potentialCalculator = new PotentialField();
 
     DummyRobot robot;
-
-    double[] toDraw = new double[12];
 
     @Override
     protected void onStart() {
@@ -34,6 +30,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setOnClickListeners();
         pathViewPath = findViewById(R.id.pathViewPath);
 
+        potentialCalculator.initALL(50,50,50,50,100,100);
+
+        robot = potentialCalculator.getRobot();
+        potentialCalculator.setTimeStep(0);
+
+        System.out.println("ESozen: Ive created a robot: " + robot.x + "//" + robot.y );
 
     }
     public void onClick(View v){
@@ -49,23 +51,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intGoalX = Integer.parseInt(GoalX);
             String GoalY = goalRobotY.getText().toString();
             intGoalY = Integer.parseInt(GoalY);
-
-            robot.x = intRobotX;
-            robot.y = intRobotY;
-
+            potentialCalculator.initALL(50,50, intRobotX, intRobotY, intGoalX,intGoalY);
+            System.out.println("Initialized Robot: " + robot.x + " //  "+ robot.goalY);
         }
         else if (v == startButton){
 
-            for (int i=1; i<=10; i++){
+            robot = potentialCalculator.getRobot();
+            System.out.println("StartAnim Robot: " + robot.x + "//" + robot.y + " And Goals are" + robot.goalX + "//" + robot.goalY);
+            System.out.println("Initial Time Step: " + robot.timeStep);
+
+            for (robot.timeStep = 0; robot.timeStep<100; robot.timeStep = robot.timeStep + 5){
                 handler1.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println(robot.x);
-                        potentialCalculator.initALL();
-                        potentialCalculator.calculatePotentials();
+                        potentialCalculator.calculatePotentials(robot, robot.timeStep);
+                        System.out.println("For Loop : " + robot.x + " " + robot.y + "Robot TimeStep: " + robot.timeStep);
                         pathViewPath.updatePath();
                     }
-                },200*i);
+                },200);
             }
 
         }
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         System.out.println("İleri Sayım: ");
                     }
-                },200*i);
+                },200);
             }
 
         }
@@ -91,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setRobotX = findViewById(R.id.objX);
         setRobotY = findViewById(R.id.objY);
 
-        goalRobotX = findViewById(R.id.objX);
-        goalRobotY = findViewById(R.id.objY);
+        goalRobotX = findViewById(R.id.objX2);
+        goalRobotY = findViewById(R.id.objY2);
 
 
         startButton.setOnClickListener(this);

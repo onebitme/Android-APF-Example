@@ -15,7 +15,7 @@ public class PotentialField {
 
     //Sets Obstacle Attr
     static Obstacle obs = new Obstacle();
-    static DummyRobot robot = new DummyRobot();
+    DummyRobot robot = new DummyRobot();
 
     public  void setObstacleCoordinate (double x, double y){
         obs.x = x;
@@ -40,6 +40,15 @@ public class PotentialField {
         robot.x = xInitial;
         robot.y = yInitial;
     }
+
+    public DummyRobot getRobot(){
+        return robot;
+    }
+
+    public void setTimeStep(double timeStep){
+        robot.timeStep=timeStep;
+    }
+
     public void setRobotDiameter(double dRobot){
         robot.diameter = dRobot;
     }
@@ -63,15 +72,16 @@ public class PotentialField {
     //Attractive Cost
     double KA = 1;
 
-    public void initALL(){
+    public void initALL(double obsX, double obsY, double robotX, double robotY, double goalX, double goalY){
         setObstacleCoordinate(95,94);
-        setRobotCoordinates(101,101);
+        setRobotCoordinates(robotX,robotY);
         setRobotDiameter(10);
-        setRobotGoal(88,85);
+        setRobotGoal(goalX,goalY);
         setRobotMass(1000);
         setRobotVelocity(0,0);
         setObstacleHeading(0);
         setRobotHeading(0);
+        setTimeStep(0);
     }
 
     //Where everything is calculated
@@ -97,9 +107,8 @@ public class PotentialField {
     //TODO: BORDER YOK
     //TODO: Uçuyor gidiyor
 
-    public void calculatePotentials(){
+    public void calculatePotentials(DummyRobot robot, double timeStep){
         //InMethod Variables
-        double timeStep = 0;
         double forceActingX;
         double forceActingY;
         double accelerationX;
@@ -107,21 +116,20 @@ public class PotentialField {
         double displacementX = 0;
         double displacementY = 0;
 
-        while (Math.abs(robot.x - robot.goalX) > 1 && Math.abs(robot.y - robot.goalY)>1){
-            forceActingX = (calculateAttractive()[0]*Math.cos(calculateAttractive()[1]))
-                    -(calculateRepulsive()[0]*Math.cos(calculateRepulsive()[1]));
-            forceActingY = (calculateAttractive()[0]*Math.sin(calculateAttractive()[1]))
-                    -(calculateRepulsive()[0]*Math.sin(calculateRepulsive()[1]));
+        forceActingX = (calculateAttractive()[0] * Math.cos(calculateAttractive()[1]))
+                - (calculateRepulsive()[0] * Math.cos(calculateRepulsive()[1]));
+        forceActingY = (calculateAttractive()[0] * Math.sin(calculateAttractive()[1]))
+                - (calculateRepulsive()[0] * Math.sin(calculateRepulsive()[1]));
 
-            accelerationX = forceActingX/robot.mass;
-            accelerationY = forceActingY/robot.mass;
-            setRobotVelocity(robot.velocityX+accelerationX*timeStep,
-                    robot.velocityY+accelerationY*timeStep);
-            displacementX = robot.velocityX*timeStep;
-            displacementY = robot.velocityY*timeStep;
-            timeStep += 0.1;
-            setRobotCoordinates(robot.x-displacementX, robot.y-displacementY);
-        }
+        accelerationX = forceActingX / robot.mass;
+        accelerationY = forceActingY / robot.mass;
+        setRobotVelocity(robot.velocityX + accelerationX * timeStep,
+                robot.velocityY + accelerationY * timeStep);
+        displacementX = robot.velocityX * timeStep;
+        displacementY = robot.velocityY * timeStep;
+        setRobotCoordinates(robot.x - displacementX, robot.y - displacementY);
+        System.out.println("ESozen: calculated points: " + robot.x + "//" + robot.y);
+
     }
 
 }
