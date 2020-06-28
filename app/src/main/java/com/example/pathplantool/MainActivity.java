@@ -2,12 +2,15 @@ package com.example.pathplantool;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.pathplantool.Helpers.PathView;
+import com.example.trustvehicle.Helpers.UpdatePos;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -15,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText setRobotX, setRobotY, goalRobotX, goalRobotY;
     PathView pathViewPath;
     PotentialField potentialCalculator = new PotentialField();
+
 
     DummyRobot robot = new DummyRobot();
     double timeStamp = 0;
@@ -29,10 +33,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
         setOnClickListeners();
-        pathViewPath = findViewById(R.id.pathViewPath);
+        //initViews();
 
+        ImageView robotView = findViewById(R.id.imageViewRobot);
+
+        pathViewPath = findViewById(R.id.pathViewPath);
         robot.initALL(100,100,50,50, 0,0);
         robot.setRobotTime(0);
 
@@ -56,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             robot.setRobotCoordinates(intRobotX,intRobotY);
             robot.setRobotGoal(intGoalX,intGoalY);
 
+
             System.out.println("Initialized Robot: " + robot.x + " //  "+ robot.goalY);
         }
         else if (v == startButton){
@@ -68,10 +77,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             handler1.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    ImageView robotView = findViewById(R.id.imageViewRobot);
                     robotPosGoal=potentialCalculator.calculatePotentials(robot.x,robot.y,robot.mass,robot.goalX,robot.goalY, 0 ,0, j);
                     robot.setRobotCoordinates(robotPosGoal[0],robotPosGoal[1]);
                     robot.setRobotVelocity(robotPosGoal[2],robotPosGoal[3]);
                     System.out.println("Robot Coordinates" + robot.x + "//"+ robot.y + "Timestamp: " + j);
+                    UpdatePos robotAnimate = new UpdatePos(robotView,400f-(float)robot.x ,400f-(float)robot.y, 0f, 400f-(float)robot.x,400f-(float)robot.y, 0f);
+                    animateRobot(robotAnimate);
                     pathViewPath.updatePath();
                     }
                 },1000*j);
@@ -107,6 +119,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stopButton.setOnClickListener(this);
         setRobotPos.setOnClickListener(this);
 
+    }
+/*
+    public void initViews(){
+        robotView = findViewById(R.id.imageViewRobot);
+
+
+    }
+*/
+    public void animateRobot(UpdatePos robotAnimate){
+        robotAnimate.setPos_x(400f-10*(float)robot.x);
+        robotAnimate.setPos_y(400f-10*(float)robot.y);
+        robotAnimate.setPos_theta(400f-10*(float)robot.heading);
+
+        robotAnimate.setSp_x(400f-10*(float)robot.x);
+        robotAnimate.setSp_y(400f-10*(float)robot.y);
+        robotAnimate.setSp_theta(400f-10*(float)robot.heading);
     }
 
 }
