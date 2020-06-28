@@ -16,7 +16,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     PathView pathViewPath;
     PotentialField potentialCalculator = new PotentialField();
 
-    DummyRobot robot;
+    DummyRobot robot = new DummyRobot();
+    double timeStamp = 0;
+
+    double[] robotPosGoal = new double[4];
 
     @Override
     protected void onStart() {
@@ -30,10 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setOnClickListeners();
         pathViewPath = findViewById(R.id.pathViewPath);
 
-        potentialCalculator.initALL(50,50,50,50,100,100);
-
-        robot = potentialCalculator.getRobot();
-        potentialCalculator.setTimeStep(0);
+        robot.initALL(100,100,50,50, 0,0);
+        robot.setRobotTime(0);
 
         System.out.println("ESozen: Ive created a robot: " + robot.x + "//" + robot.y );
 
@@ -51,26 +52,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intGoalX = Integer.parseInt(GoalX);
             String GoalY = goalRobotY.getText().toString();
             intGoalY = Integer.parseInt(GoalY);
-            potentialCalculator.initALL(50,50, intRobotX, intRobotY, intGoalX,intGoalY);
+
+            robot.setRobotCoordinates(intRobotX,intRobotY);
+            robot.setRobotGoal(intGoalX,intGoalY);
+
             System.out.println("Initialized Robot: " + robot.x + " //  "+ robot.goalY);
         }
         else if (v == startButton){
-
-            robot = potentialCalculator.getRobot();
             System.out.println("StartAnim Robot: " + robot.x + "//" + robot.y + " And Goals are" + robot.goalX + "//" + robot.goalY);
-            System.out.println("Initial Time Step: " + robot.timeStep);
+            System.out.println("TimeStep when pressed :" + robot.timeStamp);
+            timeStamp=0;
 
-            for (robot.timeStep = 0; robot.timeStep<100; robot.timeStep = robot.timeStep + 5){
-                handler1.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        potentialCalculator.calculatePotentials(robot, robot.timeStep);
-                        System.out.println("For Loop : " + robot.x + " " + robot.y + "Robot TimeStep: " + robot.timeStep);
-                        pathViewPath.updatePath();
+            for (int i=1; i<200; i++){
+                final int j=i;
+            handler1.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    robotPosGoal=potentialCalculator.calculatePotentials(robot.x,robot.y,robot.mass,robot.goalX,robot.goalY, 0 ,0, j);
+                    robot.setRobotCoordinates(robotPosGoal[0],robotPosGoal[1]);
+                    robot.setRobotVelocity(robotPosGoal[2],robotPosGoal[3]);
+                    System.out.println("Robot Coordinates" + robot.x + "//"+ robot.y + "Timestamp: " + j);
+                    pathViewPath.updatePath();
                     }
-                },200);
+                },1000*j);
             }
-
         }
         else if (v == stopButton){
             for (int i=1; i<=10; i++){

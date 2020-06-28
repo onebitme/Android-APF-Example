@@ -7,4 +7,16 @@ public class Obstacle {
     double velocity;
     double heading;
 
+    public  void setObstacleCoordinate (double obsX, double obsY){
+        x = obsX;
+        y = obsY;
+    }
+    public void setObstacleDiameter (double obsDiameter){
+        diameter = obsDiameter;
+    }
+
+    public void setObstacleHeading(double obsHeading){
+        heading = obsHeading;
+    }
+
 }
