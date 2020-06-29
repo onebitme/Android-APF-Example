@@ -20,15 +20,15 @@ public class PathView extends View {
     public PathView(Context context) {
         super(context);
         paint = new Paint();
-        paint.setStrokeWidth(10f);
-        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(6f);
+        paint.setColor(Color.GREEN);
     }
 
     public PathView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         paint = new Paint();
-        paint.setStrokeWidth(10f);
-        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(6f);
+        paint.setColor(Color.GREEN);
     }
 
     public void drawPath(Canvas canvas, float[] coordinateArray) {
@@ -41,14 +41,12 @@ public class PathView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         if (arrayToDraw != null) {
             canvas.drawLines(arrayToDraw, paint);
         }
         else{
             System.out.println("arrayToDraw = Null");
         }
-
     }
 
     public void updatePath(float[] drawMe) {

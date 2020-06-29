@@ -3,7 +3,7 @@ package com.example.pathplantool;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.example.trustvehicle.Helpers.UpdatePos;
+import com.example.pathplantool.Helpers.UpdatePos;
 
 public class DummyRobot {
 

@@ -1,4 +1,4 @@
-package com.example.trustvehicle.Helpers
+package com.example.pathplantool.Helpers
 
 import android.animation.ValueAnimator
 import android.widget.ImageView
@@ -9,25 +9,25 @@ data class UpdatePos(var someImage: ImageView,var  sp_x: Float,var sp_y: Float, 
 
     var pos_x: Float by Delegates.observable(_pos_x) { prop, old, new ->
         println("Coordinate X changed from $old to $new")
-        animate_truck(someImage, sp_x, sp_y, sp_theta, new, pos_y , pos_theta)
+        animateARobot(someImage, sp_x, sp_y, sp_theta, new, pos_y , pos_theta)
         _pos_x = new
     }
 
     var pos_y: Float by Delegates.observable(_pos_y) { prop, old, new ->
         println("Coordinate Y changed from $old to $new")
-        animate_truck(someImage, sp_x, sp_y, sp_theta, pos_x, new, pos_theta )
+        animateARobot(someImage, sp_x, sp_y, sp_theta, pos_x, new, pos_theta )
         _pos_y = new
     }
 
     var pos_theta: Float by Delegates.observable(_theta) { prop, old, new ->
         println("Coordinate Theta changed from $old to $new")
-        animate_truck(someImage, sp_x, sp_y, sp_theta, pos_x, pos_y, new )
+        animateARobot(someImage, sp_x, sp_y, sp_theta, pos_x, pos_y, new )
         _theta = new
     }
 
 }
 
-fun animate_truck(Robot: ImageView, sp_x: Float, sp_y: Float, theta_0: Float, park_x: Float, park_y: Float, theta_1: Float)
+fun animateARobot(Robot: ImageView, sp_x: Float, sp_y: Float, theta_0: Float, park_x: Float, park_y: Float, theta_1: Float)
 {
 
     val robotView = Robot
