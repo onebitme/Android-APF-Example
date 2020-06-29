@@ -3,6 +3,7 @@ package com.example.pathplantool;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.pathplantool.Helpers.PathView;
 import com.example.trustvehicle.Helpers.UpdatePos;
+import com.example.pathplantool.Helpers.PathCSVKt;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -14,10 +15,16 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+    PathCSVKt arrayBuilder;
+
     Button startButton, stopButton, setRobotPos;
     EditText setRobotX, setRobotY, goalRobotX, goalRobotY;
     PathView pathViewPath;
     PotentialField potentialCalculator = new PotentialField();
+
+    int numberOfIterations;
+    float[] whatToDraw = new float[2];
 
     UpdatePos robotAnimate;
 
@@ -51,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         System.out.println("ESozen: Ive created a robot: " + robot.x + "//" + robot.y );
 
+
+
     }
     public void onClick(View v){
         Handler handler1 = new Handler();
@@ -69,14 +78,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             robot.setRobotCoordinates(intRobotX,intRobotY);
             robot.setRobotGoal(intGoalX,intGoalY);
 
+            robot.animateRobot(robotAnimate);
+
+            numberOfIterations = ((Math.abs((int)(robot.goalX-robot.x)))
+                    +(Math.abs((int)(robot.goalY-robot.y))))/2;
+            if (whatToDraw.length>2){
+                whatToDraw = new float[2];
+            }
+
+            whatToDraw[0] = (float)robot.x;
+            whatToDraw[1] = (float)robot.y;
+
 
             System.out.println("Initialized Robot: " + robot.x + " //  "+ robot.goalY);
         }
         else if (v == startButton){
             System.out.println("StartAnim Robot: " + robot.x + "//" + robot.y + " And Goals are" + robot.goalX + "//" + robot.goalY);
             System.out.println("TimeStep when pressed :" + robot.timeStamp);
-
-            for (int i=1; i<200; i++){
+            //TODO:
+            for (int i=1; i<numberOfIterations; i++){
                 final int j=i;
             handler1.postDelayed(new Runnable() {
                 @Override
@@ -86,9 +106,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     robot.setRobotVelocity(robotPosGoal[2],robotPosGoal[3]);
                     System.out.println("Robot Coordinates" + robot.x + "//"+ robot.y + "Timestamp: " + j);
                     robot.animateRobot(robotAnimate);
-                    pathViewPath.updatePath();
+                    whatToDraw = arrayBuilder.makeAPFPathArray(whatToDraw, (float)robot.x+20f, (float)robot.y+20f);
+                    pathViewPath.updatePath(whatToDraw);
                     }
-                },1000*j);
+                },100*j);
             }
         }
         else if (v == stopButton){

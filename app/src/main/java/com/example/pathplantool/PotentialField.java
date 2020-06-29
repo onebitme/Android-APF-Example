@@ -5,7 +5,7 @@ public class PotentialField {
     //Repulsive Cost
     double KR = 1;
     //Attractive Cost
-    double KA = 4;
+    double KA = 2;
 
     //Where everything is calculated
     public double[] calculateRepulsive(double robotX, double robotY, double obsX, double obsY){
@@ -44,11 +44,42 @@ public class PotentialField {
         double robotVelocityX = 0;
         double robotVelocityY = 0;
 
+        //To solve Minus values
+        if (robotX-goalX>0 && robotY-goalY>0){
+            forceActingX = (calculateAttractive(robotX, robotY, goalX, goalY)[0])
+                    - (calculateRepulsive(robotX, robotY, obsX, obsY)[0]);
+            forceActingY = (calculateAttractive(robotX, robotY, goalX, goalY)[0])
+                    - (calculateRepulsive(robotX, robotY, obsX, obsY)[0]);
+        }
+        else if (robotX-goalX>0 && robotY-goalY<0){
+            forceActingX = (calculateAttractive(robotX, robotY, goalX, goalY)[0])
+                    - (calculateRepulsive(robotX, robotY, obsX, obsY)[0]);
+            forceActingY = - (calculateAttractive(robotX, robotY, goalX, goalY)[0])
+                    + (calculateRepulsive(robotX, robotY, obsX, obsY)[0]);
+        }
+        else if (robotX-goalX<0 && robotY-goalY>0){
+            forceActingX = - (calculateAttractive(robotX, robotY, goalX, goalY)[0])
+                    + (calculateRepulsive(robotX, robotY, obsX, obsY)[0]);
+            forceActingY = (calculateAttractive(robotX, robotY, goalX, goalY)[0])
+                    - (calculateRepulsive(robotX, robotY, obsX, obsY)[0]);
+        }
+        else{
+            forceActingX = -(calculateAttractive(robotX, robotY, goalX, goalY)[0])
+                    + (calculateRepulsive(robotX, robotY, obsX, obsY)[0]);
+            forceActingY = -(calculateAttractive(robotX, robotY, goalX, goalY)[0])
+                    + (calculateRepulsive(robotX, robotY, obsX, obsY)[0]);
 
-        forceActingX = (calculateAttractive(robotX, robotY, goalX, goalY)[0] * Math.cos(calculateAttractive(robotX, robotY, goalX, goalY)[1]))
-                - (calculateRepulsive(robotX, robotY, obsX, obsY)[0] * Math.cos(calculateRepulsive(robotX, robotY, obsX, obsY)[1]));
-        forceActingY = (calculateAttractive(robotX, robotY, goalX, goalY)[0] * Math.sin(calculateAttractive(robotX, robotY, goalX, goalY)[1]))
-                - (calculateRepulsive(robotX, robotY, obsX, obsY)[0] * Math.sin(calculateRepulsive(robotX, robotY, obsX, obsY)[1]));
+        }
+        /*
+         * Math.sin(calculateAttractive(robotX, robotY, goalX, goalY)[1])
+         * Math.sin(calculateRepulsive(robotX, robotY, obsX, obsY)[1])
+         * Math.cos(calculateAttractive(robotX, robotY, goalX, goalY)[1])
+         * Math.cos(calculateRepulsive(robotX, robotY, obsX, obsY)[1])
+         * Math.sin(calculateAttractive(robotX, robotY, goalX, goalY)[1])
+         * Math.sin(calculateRepulsive(robotX, robotY, obsX, obsY)[1])
+         * Math.cos(calculateRepulsive(robotX, robotY, obsX, obsY)[1])
+         */
+
 
         accelerationX = forceActingX / robotMass;
         accelerationY = forceActingY / robotMass;

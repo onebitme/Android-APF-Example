@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import androidx.annotation.Nullable;
 
-import com.example.trustvehicle.Helpers.PathCSVKt;
+import com.example.pathplantool.Helpers.PathCSVKt;
 
 
 public class PathView extends View {
@@ -16,8 +16,6 @@ public class PathView extends View {
     //private Repository repository = Repository.getInstance();
     private float[] arrayToDraw;
     private float radius=100;
-
-    private PathCSVKt csvKt;
 
     public PathView(Context context) {
         super(context);
@@ -45,9 +43,7 @@ public class PathView extends View {
         super.onDraw(canvas);
 
         if (arrayToDraw != null) {
-            //System.out.println("esozen: path ilk elemanı" +"X: " + arrayToDraw[0] + " Y: "+arrayToDraw[1]);
             canvas.drawLines(arrayToDraw, paint);
-            //System.out.println("bir path çizildi");
         }
         else{
             System.out.println("arrayToDraw = Null");
@@ -55,8 +51,8 @@ public class PathView extends View {
 
     }
 
-    public void updatePath() {
-        arrayToDraw = csvKt.makeFloatArray();
+    public void updatePath(float[] drawMe) {
+        arrayToDraw = drawMe;
         postInvalidate();
     }
 }
