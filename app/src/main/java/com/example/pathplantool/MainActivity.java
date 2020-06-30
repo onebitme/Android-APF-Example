@@ -19,16 +19,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     PathCSVKt arrayBuilder;
 
     Button startButton, stopButton, setRobotPos;
-    EditText setRobotX, setRobotY, goalRobotX, goalRobotY;
+    EditText setRobotX, setRobotY, goalRobotX, goalRobotY, obstacleX, obstacleY;
     PathView pathViewPath;
     PotentialField potentialCalculator = new PotentialField();
 
     int numberOfIterations;
     float[] whatToDraw = new float[2];
 
-    UpdatePos robotAnimate;
+    UpdatePos robotAnimate, obstaclePlace;
 
     DummyRobot robot = new DummyRobot();
+    Obstacle obstacle = new Obstacle();
 
 
     double[] robotPosGoal = new double[4];
@@ -47,10 +48,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //initViews();
 
         ImageView robotView = findViewById(R.id.imageViewRobot);
+        ImageView obstacleView = findViewById(R.id.imageViewObstacle);
 
         robotAnimate = new UpdatePos(robotView, 300f, 300f, 60f, 400f, 400f, 80f);
+        obstaclePlace = new UpdatePos(obstacleView, 600f, 600f, 60f, 600f, 600f, 80f);
+
 
         robot.animateRobot(robotAnimate);
+        obstacle.animateObstacle(obstaclePlace);
+
 
         pathViewPath = findViewById(R.id.pathViewPath);
         robot.initALL(100,100,50,50, 0,0);
@@ -65,30 +71,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Handler handler1 = new Handler();
 
         if (v == setRobotPos){
-            int intRobotX, intRobotY, intGoalX, intGoalY;
+            int intRobotX, intRobotY, intGoalX, intGoalY, intObsX, intObsY;
+
+            //Robot Initial
             String RobotX = setRobotX.getText().toString();
             intRobotX = Integer.parseInt(RobotX);
             String RobotY = setRobotY.getText().toString();
             intRobotY = Integer.parseInt(RobotY);
+            //Robot Goal
             String GoalX = goalRobotX.getText().toString();
             intGoalX = Integer.parseInt(GoalX);
             String GoalY = goalRobotY.getText().toString();
             intGoalY = Integer.parseInt(GoalY);
 
+            //Obstacle
+            String ObsX = obstacleX.getText().toString();
+            intObsX = Integer.parseInt(ObsX);
+            String ObsY = obstacleY.getText().toString();
+            intObsY = Integer.parseInt(ObsY);
+
+            obstacle.setObstacleCoordinate(intObsX,intObsY);
+
             robot.setRobotCoordinates(intRobotX,intRobotY);
             robot.setRobotGoal(intGoalX,intGoalY);
 
             robot.animateRobot(robotAnimate);
+            obstacle.animateObstacle(obstaclePlace);
 
             numberOfIterations = ((Math.abs((int)(robot.goalX-robot.x)))
-                    +(Math.abs((int)(robot.goalY-robot.y))))/2;
+                    +(Math.abs((int)(robot.goalY-robot.y))))*10;
             if (whatToDraw.length>2){
                 whatToDraw = new float[2];
             }
 
             whatToDraw[0] = (float)robot.x;
             whatToDraw[1] = (float)robot.y;
-
+            pathViewPath.goalX = (float)robot.goalX;
+            pathViewPath.goalY = (float)robot.goalY;
 
             System.out.println("Initialized Robot: " + robot.x + " //  "+ robot.goalY);
         }
@@ -101,15 +120,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             handler1.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    robotPosGoal=potentialCalculator.calculatePotentials(robot.x,robot.y,robot.mass,robot.goalX,robot.goalY, 0 ,0, j);
+                    robotPosGoal=potentialCalculator.calculatePotentials(robot.x,robot.y,robot.mass,robot.goalX,robot.goalY, obstacle.x ,obstacle.y, j);
                     robot.setRobotCoordinates(robotPosGoal[0],robotPosGoal[1]);
                     robot.setRobotVelocity(robotPosGoal[2],robotPosGoal[3]);
-                    System.out.println("Robot Coordinates" + robot.x + "//"+ robot.y + "Timestamp: " + j);
+                    System.out.println("Robot Coordinates: X: " + robot.x + " & Y: "+ robot.y + " & Timestamp: " + j);
                     robot.animateRobot(robotAnimate);
                     whatToDraw = arrayBuilder.makeAPFPathArray(whatToDraw, (float)robot.x+20f, (float)robot.y+20f);
                     pathViewPath.updatePath(whatToDraw);
                     }
-                },100*j);
+                },10*j);
             }
         }
         else if (v == stopButton){
@@ -136,6 +155,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         goalRobotX = findViewById(R.id.objX2);
         goalRobotY = findViewById(R.id.objY2);
+
+        obstacleX = findViewById(R.id.obsX);
+        obstacleY = findViewById(R.id.obsY);
 
 
         startButton.setOnClickListener(this);

@@ -51,7 +51,7 @@ public class DummyRobot {
         setRobotCoordinates(robotX, robotY);
         setRobotGoal(goalX, goalY);
         setRobotDiameter(10);
-        setRobotMass(1000);
+        setRobotMass(10000);
         setRobotVelocity(0, 0);
         setRobotHeading(0);
         setRobotTime(0);

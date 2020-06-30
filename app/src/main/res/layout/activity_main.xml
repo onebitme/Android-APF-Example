@@ -41,7 +41,39 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/radiobutton_on_background" />
 
+        <ImageView
+            android:id="@+id/imageViewObstacle"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="324dp"
+            android:layout_marginLeft="324dp"
+            android:layout_marginTop="229dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/alert_dark_frame" />
+
     </RelativeLayout>
+
+    <EditText
+        android:id="@+id/objX"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Robot X"
+        android:inputType="number"
+        android:textColor="#00ACC1"
+        android:textColorHint="#00ACC1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.07" />
+
 
     <EditText
         android:id="@+id/objY"
@@ -58,6 +90,41 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/objX"
         app:layout_constraintTop_toBottomOf="@+id/objX"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <EditText
+        android:id="@+id/obsX"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Obstacle X"
+        android:inputType="number"
+        android:textColor="#00ACC1"
+        android:textColorHint="#00ACC1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSetCoordinates"
+        app:layout_constraintEnd_toEndOf="@+id/objX"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/objX"
+        app:layout_constraintTop_toBottomOf="@+id/objY"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/obsY"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Obstacle Y"
+        android:inputType="number"
+        android:textColor="#00ACC1"
+        android:textColorHint="#00ACC1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSetCoordinates"
+        app:layout_constraintEnd_toEndOf="@+id/objX2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/objX2"
+        app:layout_constraintTop_toBottomOf="@+id/objY"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
@@ -94,22 +161,6 @@
         app:layout_constraintTop_toBottomOf="@+id/objX2"
         app:layout_constraintVertical_bias="0.0" />
 
-    <EditText
-        android:id="@+id/objX"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="Robot X"
-        android:inputType="number"
-        android:textColor="#00ACC1"
-        android:textColorHint="#00ACC1"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.07" />
 
     <Button
         android:id="@+id/StartAnimation"
@@ -139,16 +190,16 @@
 
     <Button
         android:id="@+id/buttonSetCoordinates"
-        android:layout_width="116dp"
-        android:layout_height="50dp"
+        android:layout_width="119dp"
+        android:layout_height="34dp"
         android:text="Set Robot Goal"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/objY"
+        app:layout_constraintEnd_toEndOf="@+id/objY2"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/objY2"
-        app:layout_constraintTop_toBottomOf="@+id/objY2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="@+id/objY"
+        app:layout_constraintTop_toBottomOf="@+id/objY"
+        app:layout_constraintVertical_bias="0.183" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

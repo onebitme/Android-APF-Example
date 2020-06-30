@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 import androidx.annotation.Nullable;
@@ -16,6 +17,9 @@ public class PathView extends View {
     //private Repository repository = Repository.getInstance();
     private float[] arrayToDraw;
     private float radius=100;
+    public float goalX;
+    public float goalY;
+    Float object = goalX;
 
     public PathView(Context context) {
         super(context);
@@ -31,18 +35,13 @@ public class PathView extends View {
         paint.setColor(Color.GREEN);
     }
 
-    public void drawPath(Canvas canvas, float[] coordinateArray) {
-        if (arrayToDraw != null) {
-            canvas.drawLines(arrayToDraw, paint);
-            System.out.println("bir path çizildi");
-        }
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (arrayToDraw != null) {
+        if (arrayToDraw != null && object != null ) {
+
             canvas.drawLines(arrayToDraw, paint);
+            canvas.drawCircle(goalX,goalY, 20f,paint);
         }
         else{
             System.out.println("arrayToDraw = Null");
