@@ -3,7 +3,7 @@ package com.example.pathplantool;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.pathplantool.Helpers.PathView;
 import com.example.pathplantool.Helpers.UpdatePos;
-import com.example.pathplantool.Helpers.PathCSVKt;
+import com.example.pathplantool.Helpers.ArrayConvertKt;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    PathCSVKt arrayBuilder;
+    ArrayConvertKt arrayBuilder;
 
     Button startButton, stopButton, setRobotPos;
     EditText setRobotX, setRobotY, goalRobotX, goalRobotY, obstacleX, obstacleY;
