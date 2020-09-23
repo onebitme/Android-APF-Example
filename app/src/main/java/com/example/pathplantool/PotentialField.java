@@ -3,7 +3,7 @@ package com.example.pathplantool;
 public class PotentialField {
 
     //Repulsive Cost
-    double KR = 880000000;
+    double KR = 28000000;
     //Attractive Cost
     double KA = 2;
 
